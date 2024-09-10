@@ -1,0 +1,44 @@
+<!doctype html>
+{% load static %}
+<html class="no-js" lang="zxx">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>{{ title }}</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}">
+    
+        <!-- CSS here -->
+        {% include '_components/_style.html' %}
+    </head>
+    <body>
+        <!-- Loader -->
+        {% include '_components/_loader.html' %}
+        <!-- end Loader -->
+        
+        <!-- Preloader Start -->
+        {% include '_components/_header.html' %}
+        <!-- Preloader Start -->
+        
+        <main>
+            
+            {% block content %}
+            	
+            {% endblock %}
+        
+        </main>
+    
+        <!-- Footer -->
+        {% include '_components/_footer.html' %}
+        <!-- end Footer -->
+        
+        <!-- Search model Begin -->
+        {% include '_components/_search_model.html' %}
+        <!-- Search model end -->
+        
+        <!-- JS here -->
+        {% include '_components/_javascript.html' %}
+    
+    </body>
+</html>
