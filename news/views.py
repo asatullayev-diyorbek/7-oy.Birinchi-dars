@@ -9,9 +9,11 @@ class IndexView(View):
         categories_with_news = Category.objects.prefetch_related(
             Prefetch('news_set', queryset=News.objects.filter(is_published=True))
         )
+        trending_newses = News.objects.filter(is_published=True).order_by('-views')[:2]
         context = {
             'title': "Bosh sahifa",
             'categories': categories_with_news,
+            'trending_newses': trending_newses,
         }
         return render(request, 'news/index.html', context)
 

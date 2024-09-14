@@ -7,89 +7,64 @@
                 <div class="col-lg-8">
                     <!-- Trending Top -->
                     <div class="slider-active">
-                        <!-- Single -->
-                        <div class="single-slider">
-                            <div class="trending-top mb-30">
-                                <div class="trend-top-img">
-                                    <img src="{% static 'news/assets/img/trending/trending_top2.jpg' %}" alt="">
-                                    <div class="trend-top-cap">
-                                            <span class="bgr" data-animation="fadeInUp" data-delay=".2s"
-                                                  data-duration="1000ms">Business</span>
-                                        <h2><a href="{% url 'news:latest_news' %}" data-animation="fadeInUp" data-delay=".4s"
-                                               data-duration="1000ms">Anna Lora Stuns In White At Her Australian
-                                            Premiere</a></h2>
-                                        <p data-animation="fadeInUp" data-delay=".6s" data-duration="1000ms">by
-                                            Alice cloe - Jun 19, 2020</p>
+                        {% for category in categories %}
+                            {% with category.last_news as news %}
+                                {% if news %}
+                                    <!-- Single -->
+                                    <div class="single-slider">
+                                        <div class="trending-top mb-30">
+                                            <div class="trend-top-img">
+                                                <img src="{{ news.get_image }}" alt="" width="100%"
+                                                     height="540px">
+                                                <div class="trend-top-cap">
+                                                <span class="bgr" data-animation="fadeInUp" data-delay=".2s"
+                                                      data-duration="1000ms">{{ category.title }}</span>
+                                                    <h2>
+                                                        <a href="{% url 'news:latest_news' %}" data-animation="fadeInUp"
+                                                           data-delay=".4s"
+                                                           data-duration="1000ms">
+                                                            {{ news.title|truncatechars:50 }}
+                                                        </a>
+                                                    </h2>
+                                                    <p data-animation="fadeInUp" data-delay=".6s"
+                                                       data-duration="1000ms">
+                                                        {{ news.author }}
+                                                        - {{ news.created_at|time:"H:i" }} {{ news.created_at|date:"M d, Y" }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single -->
-                        <div class="single-slider">
-                            <div class="trending-top mb-30">
-                                <div class="trend-top-img">
-                                    <img src="{% static 'news/assets/img/trending/trending_top02.jpg' %}" alt="">
-                                    <div class="trend-top-cap">
-                                            <span class="bgr" data-animation="fadeInUp" data-delay=".2s"
-                                                  data-duration="1000ms">Business</span>
-                                        <h2><a href="{% url 'news:latest_news' %}" data-animation="fadeInUp" data-delay=".4s"
-                                               data-duration="1000ms">Anna Lora Stuns In White At Her Australian
-                                            Premiere</a></h2>
-                                        <p data-animation="fadeInUp" data-delay=".6s" data-duration="1000ms">by
-                                            Alice cloe - Jun 19, 2020</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single -->
-                        <div class="single-slider">
-                            <div class="trending-top mb-30">
-                                <div class="trend-top-img">
-                                    <img src="{% static 'news/assets/img/trending/trending_top03.jpg' %}" alt="">
-                                    <div class="trend-top-cap">
-                                            <span class="bgr" data-animation="fadeInUp" data-delay=".2s"
-                                                  data-duration="1000ms">Business</span>
-                                        <h2><a href="{% url 'news:latest_news' %}" data-animation="fadeInUp" data-delay=".4s"
-                                               data-duration="1000ms">Anna Lora Stuns In White At Her Australian
-                                            Premiere</a></h2>
-                                        <p data-animation="fadeInUp" data-delay=".6s" data-duration="1000ms">by
-                                            Alice cloe - Jun 19, 2020</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                    <!-- Single -->
+                                {% endif %} 
+                            {% endwith %}
+                        {% endfor %}
                     </div>
                 </div>
                 <!-- Right content -->
                 <div class="col-lg-4">
                     <!-- Trending Top -->
                     <div class="row">
-                        <div class="col-lg-12 col-md-6 col-sm-6">
-                            <div class="trending-top mb-30">
-                                <div class="trend-top-img">
-                                    <img src="{% static 'news/assets/img/trending/trending_top3.jpg' %}" alt="">
-                                    <div class="trend-top-cap trend-top-cap2">
-                                        <span class="bgb">FASHION</span>
-                                        <h2><a href="{% url 'news:latest_news' %}">Secretart for Economic Air
-                                            plane that looks like</a></h2>
-                                        <p>by Alice cloe - Jun 19, 2020</p>
+                        {% for news in trending_newses %}
+                            <div class="col-lg-12 col-md-6 col-sm-6">
+                                <div class="trending-top mb-30">
+                                    <div class="trend-top-img">
+                                        <img src="{{ news.get_image }}" alt="">
+                                        <div class="trend-top-cap trend-top-cap2">
+                                            <span class="bgb">{{ news.category.title }}</span>
+                                            <h2>
+                                                <a href="{% url 'news:latest_news' %}">
+                                                    {{ news.title|truncatechars:25 }}
+                                                </a>
+                                            </h2>
+                                            <p>{{ news.author }}
+                                                - {{ news.created_at|time:"H:i" }} {{ news.created_at|date:"M d, Y" }}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-12 col-md-6 col-sm-6">
-                            <div class="trending-top mb-30">
-                                <div class="trend-top-img">
-                                    <img src="{% static 'news/assets/img/trending/trending_top4.jpg' %}" alt="">
-                                    <div class="trend-top-cap trend-top-cap2">
-                                        <span class="bgg">TECH </span>
-                                        <h2><a href="{% url 'news:latest_news' %}">Secretart for Economic Air plane that looks
-                                            like</a></h2>
-                                        <p>by Alice cloe - Jun 19, 2020</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {% endfor %}
+
                     </div>
                 </div>
             </div>

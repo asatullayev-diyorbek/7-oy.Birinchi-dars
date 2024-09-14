@@ -15,7 +15,6 @@ class NewsAdmin(admin.ModelAdmin):
     list_display_links = ('id', 'title')
     search_fields = ('id', 'title', 'slug', 'views', 'created_at', 'updated_at')
     prepopulated_fields = {'slug': ('title',)}
-    list_filter = ('category', 'is_published', 'created_at')
     list_editable = ('is_published', 'category')
 
     def get_image(self, obj):
