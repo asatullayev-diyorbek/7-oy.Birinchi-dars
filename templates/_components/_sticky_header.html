@@ -15,8 +15,7 @@
                         <ul id="navigation">
                             <li><a href="{% url 'news:index' %}" {% if request.path == '/' %}style="color: black"{% endif %}>Home</a></li>
                             <li><a href="{% url 'news:about' %}" {% if request.path == '/about/' %}style="color: black"{% endif %}>about</a></li>
-                            <li><a href="{% url 'news:category' %}" {% if request.path == '/category/' %}style="color: black"{% endif %}>Category</a></li>
-                            <li><a href="{% url 'news:latest_news' %}" {% if request.path == '/latest-news/' %}style="color: black"{% endif %}>Latest News</a></li>
+                            <li><a href="{% url 'news:category' %}" {% if request.path == '/category/' or '/latest-news/' in request.path %}style="color: black"{% endif %}>Category</a></li>
                             <li><a href="#">Pages</a>
                                 <ul class="submenu">
                                     <li><a href="{% url 'news:blog' %}" {% if request.path == '/blog/' %}style="color: black"{% endif %}>Blog</a></li>

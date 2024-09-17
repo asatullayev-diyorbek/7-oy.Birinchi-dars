@@ -20,7 +20,7 @@
                                                 <span class="bgr" data-animation="fadeInUp" data-delay=".2s"
                                                       data-duration="1000ms">{{ category.title }}</span>
                                                     <h2>
-                                                        <a href="{% url 'news:latest_news' %}" data-animation="fadeInUp"
+                                                        <a href="{% url 'news:latest_news' news.slug %}" data-animation="fadeInUp"
                                                            data-delay=".4s"
                                                            data-duration="1000ms">
                                                             {{ news.title|truncatechars:50 }}
@@ -52,8 +52,8 @@
                                         <img src="{{ news.get_image }}" alt="">
                                         <div class="trend-top-cap trend-top-cap2">
                                             <span class="bgb">{{ news.category.title }}</span>
-                                            <h2>
-                                                <a href="{% url 'news:latest_news' %}">
+                                            <h2> 
+                                                <a href="{% url 'news:latest_news' news.slug %}">
                                                     {{ news.title|truncatechars:25 }}
                                                 </a>
                                             </h2>

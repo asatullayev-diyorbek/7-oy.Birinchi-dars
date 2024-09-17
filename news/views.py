@@ -10,10 +10,14 @@ class IndexView(View):
             Prefetch('news_set', queryset=News.objects.filter(is_published=True))
         )
         trending_newses = News.objects.filter(is_published=True).order_by('-views')[:2]
+        newses = News.objects.filter(is_published=True).order_by('-created_at')[:10]
+        most_newses =  News.objects.filter(is_published=True).order_by('-views')[:5]
         context = {
             'title': "Bosh sahifa",
             'categories': categories_with_news,
             'trending_newses': trending_newses,
+            'newses': newses,
+            'most_newses': most_newses,
         }
         return render(request, 'news/index.html', context)
 
@@ -39,9 +43,11 @@ class CategoryView(View):
 
 
 class LatestNewsView(View):
-    def get(self, request):
+    def get(self, request, slug):
+        news = News.objects.filter(slug=slug).first()
         context = {
             'title': "So'ngi xabarlar",
+            'news': news,
         }
         return render(request, 'news/latest_news.html', context)
 

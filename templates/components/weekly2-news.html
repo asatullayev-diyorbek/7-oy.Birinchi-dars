@@ -25,45 +25,23 @@
                             <div class="col-lg-12">
                                 <div class="weekly2-news-active d-flex">
                                     <!-- Single -->
-                                    <div class="weekly2-single">
-                                        <div class="weekly2-img">
-                                            <img src="{% static 'news/assets/img/gallery/weeklyNews1.png' %}" alt="">
+                                    {% for news in most_newses %}
+                                        <div class="weekly2-single">
+                                            <div class="weekly2-img">
+                                                <img src="{{ news.get_image }}"
+                                                     alt="">
+                                            </div>
+                                            <div class="weekly2-caption">
+                                                <h4>
+                                                    <a href="{% url 'news:latest_news' news.slug %}">
+                                                        {{ news.title|truncatechars:30 }}
+                                                    </a>
+                                                </h4>
+                                                <p>{{ news.created_at|time:"H:i" }} {{ news.created_at|date:"M d, Y" }}</p>
+                                            </div>
                                         </div>
-                                        <div class="weekly2-caption">
-                                            <h4><a href="#">Scarlett’s disappointment at latest accolade</a></h4>
-                                            <p>Jhon | 2 hours ago</p>
-                                        </div>
-                                    </div>
-                                    <!-- Single -->
-                                    <div class="weekly2-single">
-                                        <div class="weekly2-img">
-                                            <img src="{% static 'news/assets/img/gallery/weeklyNews2.png' %}" alt="">
-                                        </div>
-                                        <div class="weekly2-caption">
-                                            <h4><a href="#">Scarlett’s disappointment at latest accolade</a></h4>
-                                            <p>Jhon | 2 hours ago</p>
-                                        </div>
-                                    </div>
-                                    <!-- Single -->
-                                    <div class="weekly2-single">
-                                        <div class="weekly2-img">
-                                            <img src="{% static 'news/assets/img/gallery/weeklyNews3.png' %}" alt="">
-                                        </div>
-                                        <div class="weekly2-caption">
-                                            <h4><a href="#">Scarlett’s disappointment at latest accolade</a></h4>
-                                            <p>Jhon | 2 hours ago</p>
-                                        </div>
-                                    </div>
-                                    <!-- Single -->
-                                    <div class="weekly2-single">
-                                        <div class="weekly2-img">
-                                            <img src="{% static 'news/assets/img/gallery/weeklyNews2.png' %}" alt="">
-                                        </div>
-                                        <div class="weekly2-caption">
-                                            <h4><a href="#">Scarlett’s disappointment at latest accolade</a></h4>
-                                            <p>Jhon | 2 hours ago</p>
-                                        </div>
-                                    </div>
+                                    {% endfor %}
+                                    
                                 </div>
                             </div>
                         </div>
