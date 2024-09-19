@@ -13,16 +13,40 @@
                 <div class="main-menu d-none d-md-block">
                     <nav>
                         <ul id="navigation">
-                            <li><a href="{% url 'news:index' %}" {% if request.path == '/' %}style="color: black"{% endif %}>Home</a></li>
-                            <li><a href="{% url 'news:about' %}" {% if request.path == '/about/' %}style="color: black"{% endif %}>about</a></li>
-                            <li><a href="{% url 'news:category' %}" {% if request.path == '/category/' or '/latest-news/' in request.path %}style="color: black"{% endif %}>Category</a></li>
+                            <li><a href="{% url 'news:index' %}"
+                                   {% if request.path == '/' %}style="color: black"{% endif %}>Home</a></li>
+                            <li><a href="{% url 'news:about' %}"
+                                   {% if request.path == '/about/' %}style="color: black"{% endif %}>about</a></li>
+                            <li><a href="{% url 'news:category' %}"
+                                   {% if request.path == '/category/' or '/latest-news/' in request.path %}style="color: black"{% endif %}>Category</a>
+                            </li>
                             <li><a href="#">Pages</a>
                                 <ul class="submenu">
-                                    <li><a href="{% url 'news:blog' %}" {% if request.path == '/blog/' %}style="color: black"{% endif %}>Blog</a></li>
-                                    <li><a href="{% url 'news:blog_details' %}" {% if request.path == '/blog-details/' %}style="color: black"{% endif %}>Blog Details</a></li>
+                                    <li><a href="{% url 'news:blog' %}"
+                                           {% if request.path == '/blog/' %}style="color: black"{% endif %}>Blog</a>
+                                    </li>
+                                    <li><a href="{% url 'news:blog_details' %}"
+                                           {% if request.path == '/blog-details/' %}style="color: black"{% endif %}>Blog
+                                        Details</a></li>
                                 </ul>
                             </li>
-                            <li><a href="{% url 'news:contact' %}" {% if request.path == '/contact/' %}style="color: black"{% endif %}>Contact</a></li>
+                            <li><a href="{% url 'news:contact' %}"
+                                   {% if request.path == '/contact/' %}style="color: black"{% endif %}>Contact</a></li>
+                            <li><a href="#">Profilim</a>
+                                <ul class="submenu">
+                                    {% if request.user.is_authenticated %}
+                                        <li><a>{{ request.user.get_full_name }}</a></li>
+                                        <li><a href="{% url 'register:logout' %}">Chiqish</a></li>
+                                    {% else %}
+                                        <li><a href="{% url 'register:register' %}"
+                                               {% if request.path == '/auth/register/' %}style="color: black"{% endif %}>Ro'yxatdan
+                                            o'tish</a></li>
+                                        <li><a href="{% url 'news:blog_details' %}"
+                                               {% if request.path == '/auth/login/' %}style="color: black"{% endif %}>Kirish</a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </li>
                         </ul>
                     </nav>
                 </div>

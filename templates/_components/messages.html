@@ -1,0 +1,59 @@
+<!-- Modal -->
+<div class="container-fluid">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            {% if message.tags == 'success' %}
+                                <h5 class="modal-title text-uppercase" id="exampleModalLongTitle" style="color: green">
+                                    Muvafaqqiyatli!
+                                </h5>
+                            {% elif message.tags == 'warning' %}
+                                <h5 class="modal-title text-uppercase" id="exampleModalLongTitle" style="color: orange">
+                                    Ogohlantirish!
+                                </h5>
+                            {% else %}
+                                <h5 class="modal-title text-uppercase" id="exampleModalLongTitle" style="color: red">
+                                    Xatolik!
+                                </h5>
+                            {% endif %}
+                        </div>
+                        <div class="modal-body">
+                            {{ message }}
+                        </div>
+                        <div class="modal-footer">
+                            <h6 id="countdown">10 s</h6>
+                            <a href="{% url 'news:index' %}" type="button" class="btn btn-primary">Bosh sahifa</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+
+
+<script>
+    window.onload = function () {
+        // Modalni ko'rsatamiz
+        $('#messageModal').modal('show');
+
+        // Teskari sanoq boshlaymiz
+        let countdown = 10;
+        const countdownElement = document.getElementById('countdown');
+
+        const interval = setInterval(function () {
+            countdown--;
+            countdownElement.innerText = countdown + ' s';
+
+            // 0 ga teng bo'lganda modalni yopamiz
+            if (countdown <= 0) {
+                clearInterval(interval);
+                $('#messageModal').modal('hide');
+            }
+        }, 1000); // Har bir soniyada yangilash
+    };
+</script>
