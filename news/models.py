@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -43,3 +44,17 @@ class News(models.Model):
         if self.image:
             return self.image.url
         return "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"
+
+
+class Comment(models.Model):
+    news = models.ForeignKey(News, on_delete=models.CASCADE, verbose_name="Yangilik")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Foydalanuvchi")
+    content = models.TextField(verbose_name="Komentariya")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Qo'shildi")
+
+    def __str__(self):
+        return f"{self.user.username} - {self.news.title}"
+
+    class Meta:
+        verbose_name_plural = "Komentariyalar"
+        verbose_name = "Komentariya"

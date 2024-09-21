@@ -1,11 +1,13 @@
 from django.contrib import messages
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import View
-from .models import News, Category
 from django.db.models import Prefetch
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+from .models import News, Category, Comment
 
 
-class IndexView(View):
+class IndexView(LoginRequiredMixin, View):
     def get(self, request):
         categories_with_news = Category.objects.prefetch_related(
             Prefetch('news_set', queryset=News.objects.filter(is_published=True))
@@ -23,7 +25,7 @@ class IndexView(View):
         return render(request, 'news/index.html', context)
 
 
-class AboutView(View):
+class AboutView(LoginRequiredMixin, View):
     def get(self, request):
         context = {
             'title': "Biz haqimizda",
@@ -31,7 +33,7 @@ class AboutView(View):
         return render(request, 'news/about.html', context)
 
 
-class CategoryView(View):
+class CategoryView(LoginRequiredMixin, View):
     def get(self, request):
         categories_with_news = Category.objects.prefetch_related(
             Prefetch('news_set', queryset=News.objects.filter(is_published=True))
@@ -43,9 +45,10 @@ class CategoryView(View):
         return render(request, 'news/category.html', context)
 
 
-class LatestNewsView(View):
+class LatestNewsView(LoginRequiredMixin, View):
     def get(self, request, slug):
         news = News.objects.filter(slug=slug).first()
+
         context = {
             'title': "So'ngi xabarlar",
             'news': news,
@@ -53,7 +56,27 @@ class LatestNewsView(View):
         return render(request, 'news/latest_news.html', context)
 
 
-class BlogView(View):
+class CommentView(LoginRequiredMixin, View):
+    def post(self, request):
+        news_id = request.POST.get('news_id')
+        content = request.POST.get('content')
+        if news_id and content:
+            news = News.objects.filter(id=news_id).first()
+            if news:
+                Comment.objects.create(news=news, user=request.user, content=content)
+                messages.success(request, "Komentariya qo'shildi!")
+            else:
+                messages.error(request, "Yangilik topilmadi!")
+        else:
+            messages.error(request, "Iltimos komentari kiriting!")
+        page = request.META.get('HTTP_REFERER', 'news:category')
+        return redirect(page)
+
+    def get(self, request):
+        return redirect('news:category')
+
+
+class BlogView(LoginRequiredMixin, View):
     def get(self, request):
         context = {
             'title': "Blog",
@@ -61,7 +84,7 @@ class BlogView(View):
         return render(request, 'news/blog.html', context)
 
 
-class BlogDetailsView(View):
+class BlogDetailsView(LoginRequiredMixin, View):
     def get(self, request):
         context = {
             'title': "Blog qismi",

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-from .models import Category, News
+from .models import Category, News, Comment
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -25,8 +25,12 @@ class NewsAdmin(admin.ModelAdmin):
     get_image.short_description = 'Rasm'
 
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('id', 'news', 'user', 'content', 'created_at')
+    list_display_links = ('id', 'news')
 
 
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(News, NewsAdmin)
+admin.site.register(Comment, CommentAdmin)
 

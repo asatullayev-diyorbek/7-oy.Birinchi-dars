@@ -7,6 +7,7 @@ urlpatterns = [
     path('about/', views.AboutView.as_view(), name='about'),
     path('category/', views.CategoryView.as_view(), name='category'),
     path('latest-news/<slug:slug>/', views.LatestNewsView.as_view(), name='latest_news'),
+    path('comment/', views.CommentView.as_view(), name='comment'),
     path('blog/', views.BlogView.as_view(), name='blog'),
     path('blog-details/', views.BlogDetailsView.as_view(), name='blog_details'),
     path('contact/', views.ContactView.as_view(), name='contact'),

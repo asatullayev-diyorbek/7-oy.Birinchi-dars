@@ -1,9 +1,10 @@
 from django.contrib import messages
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.views.generic import View
+from django.contrib.auth.decorators import login_not_required, login_required
 
 from .forms import RegisterForm, LoginForm
 from .models import Confirmation
@@ -12,6 +13,9 @@ from .models import Confirmation
 class RegisterView(View):
     def get(self, request):
         form = RegisterForm()
+        if request.user.is_authenticated:
+            messages.warning(request, "Bu sahifaga kirish uchun avval tizimdan chiqishingiz kerak!")
+            return redirect('news:index')
         context = {
             'form': form,
             'title': 'Ro\'yxatdan o\'tish'
@@ -19,6 +23,9 @@ class RegisterView(View):
         return render(request,'register/register.html', context)
 
     def post(self, request):
+        if request.user.is_authenticated:
+            messages.warning(request, "Bu sahifaga kirish uchun avval tizimdan chiqishingiz kerak!")
+            return redirect('news:index')
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = User.objects.create(
@@ -54,6 +61,9 @@ class RegisterView(View):
 
 class ConfirmationView(View):
     def get(self, request):
+        if request.user.is_authenticated:
+            messages.warning(request, "Bu sahifaga kirish uchun avval tizimdan chiqishingiz kerak!")
+            return redirect('news:index')
         email = request.GET.get('email')
         confirmation_code = request.GET.get('confirmation_code')
 
@@ -79,6 +89,9 @@ class ConfirmationView(View):
 
 class LoginView(View):
     def get(self, request):
+        if request.user.is_authenticated:
+            messages.warning(request, "Bu sahifaga kirish uchun avval tizimdan chiqishingiz kerak!")
+            return redirect('news:index')
         form = LoginForm()
         context = {
             'form': form,
@@ -87,6 +100,9 @@ class LoginView(View):
         return render(request, 'register/login.html', context)
 
     def post(self, request):
+        if request.user.is_authenticated:
+            messages.warning(request, "Bu sahifaga kirish uchun avval tizimdan chiqishingiz kerak!")
+            return redirect('news:index')
         form = LoginForm(request.POST)
         if form.is_valid():
             login(request, form.cleaned_data['user'])
@@ -99,6 +115,7 @@ class LoginView(View):
         return render(request, 'register/login.html', context)
 
 
+@login_required(login_url='register:login')
 def logout_user(request):
     logout(request)
     messages.warning(request, "Siz tizimdan chiqdingiz!")
