@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from ckeditor.fields import RichTextField
 
 
 class Category(models.Model):
@@ -24,7 +25,7 @@ class News(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name="Kategoriya")
     title = models.CharField(max_length=200, verbose_name="Nom")
     slug = models.SlugField(max_length=200, verbose_name="Slug")
-    content = models.TextField(verbose_name="Kontent")
+    content = RichTextField(verbose_name="Kontent")
     views = models.PositiveIntegerField(default=0, verbose_name="Ko'rilishlar")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Qo'shildi")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Yangilandi")

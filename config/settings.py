@@ -1,4 +1,6 @@
 from pathlib import Path
+from typing import Dict
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,6 +21,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -29,6 +32,12 @@ INSTALLED_APPS = [
     # My app
     'news',
     'register',
+
+    # CKEDITOR
+    'ckeditor',
+    'ckeditor_uploader',
+
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [
@@ -102,6 +111,7 @@ STATIC_ROOT = BASE_DIR.joinpath('staticfiles')
 STATICFILES_DIRS = [
     BASE_DIR.joinpath('news/static'),
 ]
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 
 # MEDIA
@@ -124,3 +134,54 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'asatullayevblog@gmail.com'
 EMAIL_HOST_PASSWORD = 'ztuqrinhdhyzebux'
 DEFAULT_FROM_EMAIL = 'asatullayevblog@gmail.com'
+
+
+# CDEDITOR
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': [
+            {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
+            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', '-', 'Undo', 'Redo']},
+            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']},
+            {'name': 'basicstyles', 'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
+            {'name': 'paragraph', 'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl']},
+            {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
+            {'name': 'insert', 'items': ['Image', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
+            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
+            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
+            {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
+        ],
+        'height': 500,
+        'width': 'auto',
+        'extraAllowedContent': '*[*]',
+        'extraPlugins': 'iframe',
+    },
+}
+
+
+CKEDITOR_UPLOAD_PATH = "media/ckeditor/"
+CKEDITOR_RESTRICT_BY_USER = True
+
+
+
+# Jazzmin
+JAZZMIN_SETTINGS = {
+    "site_title": "News",
+    "welcome_sign": "Admin Paneliga Xush Kelibsiz!",
+    "copyright": "2024 Sizning Nomingiz",
+    "search_model": "auth.User",
+    "user_avatar": "images/user_avatar.png",
+    "topmenu_links": [
+        {"name": "Bosh Sahifa", "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"name": "Yangiliklar", "url": "/admin/news/news/", "permissions": ["app_name.view_model"]},
+    ],
+    "usermenu_links": [
+        {"model": "auth.User"},
+        {"model": "auth.Group"},
+    ],
+    "show_sidebar": True,
+    "show_ui_builder": True,
+    "changeform_format": "horizontal",  # O'zgartirish formatini tanlash: 'horizontal' yoki 'vertical'
+    "pagination": 20,
+}
+
