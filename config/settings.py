@@ -181,7 +181,7 @@ JAZZMIN_SETTINGS = {
     ],
     "show_sidebar": True,
     "show_ui_builder": True,
-    "changeform_format": "horizontal",  # O'zgartirish formatini tanlash: 'horizontal' yoki 'vertical'
+    "changeform_format": "horizontal",  
     "pagination": 20,
 }
 
